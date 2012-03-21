@@ -84,7 +84,7 @@ namespace ResqueSharp
             this.Redis.Remove(string.Format("worker:{0}:started", WorkerId()));
         }
 
-        private void Process(Job job)
+        public void Process(Job job)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace ResqueSharp
             }
             catch (Exception e)
             {
-                _resque.LogFailure(new Failure(e.InnerException, this.WorkerId(), job.queue, job.payload));
+                _resque.LogFailure(new Failure(e.InnerException ?? e, this.WorkerId(), job.queue, job.payload));
             }
             finally
             {
@@ -101,7 +101,7 @@ namespace ResqueSharp
             }
         }
 
-        private Job Reserve()
+        public Job Reserve()
         {
             foreach (string queue in _queues)
             {

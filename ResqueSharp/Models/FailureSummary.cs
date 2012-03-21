@@ -5,6 +5,7 @@ namespace ResqueSharp.Models
     public class FailureSummary
     {
         public DateTime Failed_at { get; set; }
+        public DateTime? Retried_at { get; set; }
         public Job.Payload Payload { get; set; }
         public string Error { get; set; }
         public string Backtrace { get; set; }

@@ -31,7 +31,7 @@ namespace ResqueSharp
         public Resque(string host)
         {
             this.Redis = new RedisClient(host);
-            this.FailureManager = new FailureManager(this.Redis);
+            this.FailureManager = new FailureManager(this);
         }
 
         public bool Push(string queue, string className, params object[] args)

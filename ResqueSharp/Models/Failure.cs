@@ -7,9 +7,9 @@ namespace ResqueSharp.Models
         public Exception Exception { get; set; }
         public string WorkerId { get; set; }
         public string Queue { get; set; }
-        public object Payload { get; set; }
+        public Job.Payload Payload { get; set; }
 
-        public Failure(Exception exception, string workerId, String queue, Object payload)
+        public Failure(Exception exception, string workerId, String queue, Job.Payload payload)
         {
             this.Exception = exception;
             this.WorkerId = workerId;
