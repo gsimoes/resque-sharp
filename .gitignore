@@ -10,3 +10,13 @@ tests/bin
 tests/*.xml
 resque-sharp/obj/Release/resque-sharp.dll
 resque-sharp/obj/Release/resque-sharp.pdb
+
+packages/
+ResqueSharp.Tests/bin/
+ResqueSharp.Tests/obj/
+ResqueSharp.Web/bin/
+ResqueSharp.Web/obj/
+ResqueSharp.WorkerExample/obj/
+ResqueSharp/obj/
+ResqueSharp/bin/
+ResqueSharp.WorkerExample/bin/

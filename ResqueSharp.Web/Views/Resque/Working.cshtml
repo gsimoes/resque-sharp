@@ -1,0 +1,12 @@
+﻿@model ResqueSharp.Web.Models.WorkersViewModel
+@{
+    ViewBag.Title = "Working";
+}
+
+@Html.Partial("WorkingPartial", Model)
+
+<script type="text/javascript">
+    $(function () {
+        $("#menu-working").addClass("selected")
+    });
+</script>

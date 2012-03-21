@@ -1,0 +1,14 @@
+﻿@model ResqueSharp.Web.Models.QueueOverviewViewModel
+
+@{
+    ViewBag.Title = "Queues";
+}
+
+@Html.Partial("QueuesPartial", Model.QueuesViewModel)
+@Html.Partial("WorkingPartial", Model.WorkersViewModel)
+
+<script>
+    $(function () {
+        $("#menu-overview").addClass("selected");
+    });
+</script>

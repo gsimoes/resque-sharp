@@ -1,0 +1,42 @@
+﻿@model ResqueSharp.Web.Models.WorkersViewModel
+
+<h2>@Model.Workers.Count() of @Model.TotalWorkers Workers Working</h2>
+
+<p>The list below contains all workers which are currently running a job.</p>
+
+<table class="default" style="width: 100%">
+    <tbody>
+        @foreach (var item in Model.Workers)
+        {
+            <tr>
+                <td>
+                   @item.WhereAt
+                </td>
+                <td>
+                    @item.Queue
+                </td>
+                <td>
+                    @item.Job <span style="font-size: 0.7em">@Math.Round(DateTime.Now.Subtract(item.RunAt).TotalMinutes, 0) minutes ago.</span>
+                </td>
+            </tr>
+        }
+        @if (Model.Workers.Count() == 0)
+        { 
+            <tr>
+                <td colspan="3" style="padding: 30px; text-align: center; font-style: italic">Nothing is happening right now...</td>
+            </tr>
+        }
+    </tbody>
+    <thead>
+        <tr>
+            <th style="width: 200px">Where</th>
+            <th style="width: 200px">Queue</th>
+            <th>Job</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="3">* Workers running jobs</td>
+        </tr>
+    </tfoot>
+</table>

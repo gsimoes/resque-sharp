@@ -1,0 +1,43 @@
+﻿@model ResqueSharp.Web.Models.QueuesViewModel
+<h2>Queues</h2>
+<p>
+    This list below contains all the registered queues with the number of jobs currently
+    in the queue.
+</p>
+<table class="default" style="">
+    <tbody>
+        @foreach (var item in Model.Queues)
+        {
+            <tr>
+                <td style="width: 120px"><strong>@item.QueueName</strong></td>
+                <td style="width: 120px">
+                    @item.Jobs
+                </td>
+            </tr>
+        }
+
+        @if (Model.Queues.Count() == 0)
+        { 
+            <tr>
+                <td colspan="2" style="padding: 20px; font-style: italic;">Hooray! No queues...</td>
+            </tr>
+        }
+        else {
+            <tr class="failed">
+                <td><strong>failed</strong></td>
+                <td>@Model.FailedCount</td>
+            </tr>
+        }
+    </tbody>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Jobs</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="2">* All current queues</td>
+        </tr>
+    </tfoot>
+</table>
