@@ -1,16 +1,21 @@
 h1. Resque-Sharp
 
-.NET implementation of Chris Wanstrath's "Resque":http://github.com/defunkt/resque, which is a Redis-based background processing framework.
+.NET C# implementation of Chris Wanstrath's "Resque":http://github.com/defunkt/resque, which is a Redis-based background processing framework.
 
 h1. Why?
 
 Some jobs need to be run on Windows using .NET code. Some need to run in pure Ruby on UNIX. Some need to run in Java/JRuby. Now we can do all of the above with one job processing framework.
 
+h1. Redis Server builds for Windows
+
+  * "Downloads for Cygwin 32bit Redis Server Windows builds":http://code.google.com/p/servicestack/wiki/RedisWindowsDownload
+  * "Project that lets you run Redis as a Windows Service":https://github.com/rgl/redis
+  * "Another Redis as a Windows Service project, which allows you to run separate service for each Redis instance":https://github.com/kcherenkov/redis-windows-service
+  * "Downloads for MinGW 32bit and 64bit Redis Server Windows builds":http://github.com/dmajkic/redis/downloads
+
 h1. Contributing
 
-This is just getting started and still bit of a mess. The VC# project needs to be cleaned up to point to relative paths for references, etc.  Contributions are very welcome. 
-
-Once you've made your great commits:
+Contributions are very welcome. Once you've made your great commits:
 
 1. "Fork" http://help.github.com/forking/ resque-sharp
 2. Create a topic branch - `git checkout -b my_branch`
