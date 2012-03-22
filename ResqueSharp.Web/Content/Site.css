@@ -157,7 +157,44 @@ table.default {
         border-radius: 0px 0px 10px 10px;
     }
 
+ul.failed {
+    padding: 0;
+    margin: 0;
+    clear: both;
+}
 
+form {
+    float: right;
+    margin-top: 10px;
+}
+
+ul.failed li {
+    list-style-type: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    overflow: hidden;
+    background-color: white;
+    display: block;
+}
+
+    ul.failed li div.retried {
+        float: right;
+    }
+
+    ul.failed li dl dt {
+        font-size: 0.75em;
+        font-weight: bold;
+        width: 60px;
+        float: left;
+        padding-top: 4px;
+        text-align: right;
+    }
+
+    ul.failed li dl dd {
+        margin-bottom: 10px;
+        margin-left: 70px;
+    }
 
 /* site title
 ----------------------------------------------------------*/

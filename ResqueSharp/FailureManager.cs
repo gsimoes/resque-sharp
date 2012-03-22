@@ -53,16 +53,14 @@ namespace ResqueSharp
             _Resque.Push(item["queue"].ToString(), ((Job.Payload)item["payload"]).@class, ((Job.Payload)item["payload"]).args);
         }
 
-        //   def self.requeue(index)
-        //  item = all(index)
-        //  item['retried_at'] = Time.now.strftime("%Y/%m/%d %H:%M:%S")
-        //  Resque.redis.lset(:failed, index, Resque.encode(item))
-        //  Job.create(item['queue'], item['payload']['class'], *item['payload']['args'])
-        //end
-
         public int Count()
         {
             return _Resque.Redis.GetListCount(Constants.FailuresList);
+        }
+
+        public void Clear()
+        {
+            _Resque.Redis.Remove(Constants.FailuresList);
         }
     }
 }

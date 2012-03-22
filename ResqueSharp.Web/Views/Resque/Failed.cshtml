@@ -7,7 +7,18 @@
 
 @if (Model.Count() > 0)
 {
-    <p>Showing @ViewBag.From to @ViewBag.To of @ViewBag.Count jobs</p>
+    <p style="float: left">Showing @ViewBag.From to @ViewBag.To of @ViewBag.Count jobs</p>
+    
+    using (Html.BeginForm("ClearFailed", "resque"))
+    {
+        <input type="submit" value="Clear failed jobs" />    
+    }
+    
+    using (Html.BeginForm("RequeueAll", "resque"))
+    {
+        <input type="submit" value="Retry failed jobs" />    
+    }    
+    
     <ul class="failed">
         @foreach (var failure in Model)
         {
@@ -16,6 +27,9 @@
                     <dt>Worker</dt>
                     <dd>
                         @failure.Worker on <strong>@failure.Queue</strong> at @failure.Failed_at
+                        <div class="retried">
+                            <strong>@( failure.Retried_at.HasValue ? "Retried at " + failure.Retried_at.ToString() : "Never retried" )</strong>
+                        </div>
                     </dd>
                     <dt>Class</dt>
                     <dd><code>@failure.Payload.Class()</code></dd>
@@ -35,11 +49,13 @@
         }
     </ul>
     <p>
-        @if (ViewBag.HasPreviousPage) {
+        @if (ViewBag.HasPreviousPage)
+        {
             <text>@Html.ActionLink("less", "failed", new { page = ViewBag.PreviousPage })</text>
         }
 
-        @if(ViewBag.HasNextPage) {
+        @if (ViewBag.HasNextPage)
+        {
             <text>@Html.ActionLink("more", "failed", new { page = ViewBag.NextPage })</text>
         }        
     </p>
@@ -60,33 +76,3 @@ else
         });
     });
 </script>
-<style>
-    ul.failed {
-        padding: 0;
-        margin: 0;
-    }
-    
-    ul.failed li {
-        list-style-type: none;
-        margin-top: 10px;
-        padding: 10px;
-        width: 100%;
-        border: 1px solid #CCC;
-        overflow: hidden;
-        background-color: white;
-    }
-
-        ul.failed li dl dt {
-            font-size: 0.75em;
-            font-weight: bold;
-            width: 60px;
-            float: left;
-            padding-top: 4px;
-            text-align: right;
-        }
-
-        ul.failed li dl dd {
-            margin-bottom: 10px;
-            margin-left: 70px;
-        }
-</style>

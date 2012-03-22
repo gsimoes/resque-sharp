@@ -44,7 +44,7 @@ namespace ResqueSharp.Tests
             {
                 for (int i = 0; i < 50; i++)
                 {
-                    ResqueClient.Push("console", typeof(DummyJob).AssemblyQualifiedName, "Some message");
+                    //ResqueClient.Push("console", typeof(DummyJob).AssemblyQualifiedName, "Some message");
                     ResqueClient.Push("failing", typeof(FailingJob).AssemblyQualifiedName);
                 }
             }

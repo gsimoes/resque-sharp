@@ -64,5 +64,24 @@ namespace ResqueSharp.Web.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult ClearFailed()
+        {
+            ResqueClient.FailureManager.Clear();
+
+            return RedirectToAction("Failed");
+        }
+
+        [HttpPost]
+        public ActionResult RequeueAll()
+        {
+            var count = ResqueClient.FailureManager.Count();
+
+            for (int i = 0; i < count; i++)
+                ResqueClient.FailureManager.Requeue(i);
+
+            return RedirectToAction("Failed");
+        }
     }
 }

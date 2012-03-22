@@ -50,6 +50,18 @@ namespace ResqueSharp.Web
             );
 
             routes.MapRoute(
+                name: "RequeueAll",
+                url: "resque/failed/requeue/all",
+                defaults: new { controller = "Resque", action = "RequeueAll" }
+            );
+
+            routes.MapRoute(
+               name: "ClearFailed",
+               url: "resque/failed/clear",
+               defaults: new { controller = "Resque", action = "ClearFailed" }
+           );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
@@ -59,9 +71,6 @@ namespace ResqueSharp.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
-            //// Use LocalDB for Entity Framework by default
-            //Database.DefaultConnectionFactory = new SqlConnectionFactory("Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
