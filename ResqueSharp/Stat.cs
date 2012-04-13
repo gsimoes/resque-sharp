@@ -2,40 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ResqueSharp.Helper;
+using ServiceStack.Redis;
 
-namespace resque
+namespace ResqueSharp
 {
-    public class Stat 
+    public class Stat
     {
-        public Stat()
+        private IRedisClient _redisClient;
+
+        public Stat(IRedisClient redisClient)
         {
-            throw new NotImplementedException();
+            _redisClient = redisClient;
         }
 
-        public static int get(String stat)
+        public int Get(string stat)
         {
-            return 0;
-            //return Int32.Parse(Resque.redis().GetString("resque:stat:" + stat));
+            return _redisClient.Get<int>(GetStatKey(stat));
         }
 
-        public static void increment(String stat, int amt)
+        public long Increment(string stat, uint amount)
         {
-           // Resque.redis().Increment("resque:stat:" + stat, amt);
+            return _redisClient.Increment(GetStatKey(stat), amount);
         }
 
-        public static void increment(String stat)
+        public long Increment(string stat)
         {
-            //Resque.redis().Increment("resque:stat:" + stat, 1);
+            return Increment(stat, 1);
         }
 
-        public static void decrement(String stat)
+        public void Decrement(string stat)
         {
-            //Resque.redis().Decrement("resque:stat:" + stat);
+            _redisClient.Decrement(GetStatKey(stat), 1);
         }
 
-        public static void clear(String stat)
+        public void Clear(string stat)
         {
-           // Resque.redis().Remove("resque:stat:" + stat);
+            _redisClient.Remove(GetStatKey(stat));
+        }
+
+        private static string GetStatKey(string stat)
+        {
+            return string.Format("{0}:stat:{1}", Constants.Namespace, stat);
         }
     }
 }

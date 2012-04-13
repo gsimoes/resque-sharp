@@ -78,6 +78,7 @@
     <Compile Include="Models\Failure.cs" />
     <Compile Include="Models\FailureSummary.cs" />
     <Compile Include="Models\QueueSummary.cs" />
+    <Compile Include="Models\ResqueSummary.cs" />
     <Compile Include="Models\WorkerSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resque.cs" />

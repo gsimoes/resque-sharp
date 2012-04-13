@@ -65,6 +65,13 @@ namespace ResqueSharp.Web.Controllers
             return View(model);
         }
 
+        public ActionResult Stats()
+        {
+            var model = ResqueClient.ResqueSummary();
+
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult ClearFailed()
         {

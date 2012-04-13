@@ -7,7 +7,7 @@ namespace ResqueSharp.Jobs
     {
         public static void Perform(string message)
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
             Console.WriteLine(message);
         }
     }

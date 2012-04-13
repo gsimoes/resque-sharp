@@ -42,9 +42,9 @@ namespace ResqueSharp.Tests
 
             public void Create100Jobs()
             {
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 2; i++)
                 {
-                    //ResqueClient.Push("console", typeof(DummyJob).AssemblyQualifiedName, "Some message");
+                    ResqueClient.Push("console", typeof(DummyJob).AssemblyQualifiedName, "Some message");
                     ResqueClient.Push("failing", typeof(FailingJob).AssemblyQualifiedName);
                 }
             }

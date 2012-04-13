@@ -1,0 +1,54 @@
+﻿@model ResqueSharp.Models.ResqueSummary
+
+@{
+    ViewBag.Title = "Stats";
+}
+
+<h2>Stats</h2>
+<br />
+<table class="default">
+    <tbody>
+        <tr>
+            <td style="width: 200px">Pending</td>
+            <td>@Model.Pending</td>
+        </tr>
+        <tr>
+            <td>Processed</td>
+            <td>@Model.Processed</td>
+        </tr>
+        <tr>
+            <td>Queues</td>
+            <td>@Model.Queues</td>
+        </tr>
+        <tr>
+            <td>Workers</td>
+            <td>@Model.Workers</td>
+        </tr>
+        <tr>
+            <td>Working</td>
+            <td>@Model.Working</td>
+        </tr>
+        <tr>
+            <td>Failed</td>
+            <td>@Model.Failed</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th>Stat</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<script>
+    $(function () {
+        $("#menu-stats").addClass("selected");
+    });
+</script>

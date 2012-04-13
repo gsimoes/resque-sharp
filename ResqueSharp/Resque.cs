@@ -16,6 +16,8 @@ namespace ResqueSharp
 {
     public class Resque : IDisposable
     {
+        private Stat _stat;
+
         public RedisClient Redis
         {
             get;
@@ -32,6 +34,8 @@ namespace ResqueSharp
         {
             this.Redis = new RedisClient(host);
             this.FailureManager = new FailureManager(this);
+
+            this._stat = new Stat(Redis);
         }
 
         public bool Push(string queue, string className, params object[] args)
@@ -107,6 +111,20 @@ namespace ResqueSharp
                       };
                   })
                   .ToList();
+        }
+
+        public ResqueSummary ResqueSummary()
+        {
+            var queues = Queues();
+
+            return new ResqueSummary {
+                Pending = queues.Sum(s => s.Jobs),
+                Processed = _stat.Get("processed"),
+                Queues = queues.Count(),
+                Workers = WorkersCount(),
+                Working = WorkersRunningJobs().Count(),
+                Failed = _stat.Get("failed")
+            };
         }
 
         private void WatchQueue(string queue)

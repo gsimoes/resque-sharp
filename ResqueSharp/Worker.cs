@@ -12,8 +12,10 @@ namespace ResqueSharp
     public class Worker : IDisposable
     {
         private string[] _queues;
-        private Resque _resque;
         private string _workerId;
+
+        private Resque _resque;
+        private Stat _stat;
 
         public IRedisClient Redis
         {
@@ -22,7 +24,8 @@ namespace ResqueSharp
 
         public Worker(string redisHost, params string[] queues)
         {
-            _resque = new Resque(redisHost);
+            this._resque = new Resque(redisHost);
+            this._stat = new Stat(Redis);
 
             if (queues.Contains("*"))
                 _queues = _resque.Queues().Select(s => s.QueueName.Split(':').Last()).ToArray();
@@ -75,6 +78,9 @@ namespace ResqueSharp
 
         private void DoneWorking(Job job)
         {
+            _stat.Increment("processed");
+            _stat.Increment(string.Format("processed:{0}", WorkerId()));
+
             this.Redis.Remove(string.Format("worker:{0}", WorkerId()));
         }
 
@@ -82,6 +88,9 @@ namespace ResqueSharp
         {
             this.Redis.RemoveItemFromSet(Constants.WorkersSet, string.Format("worker:{0}", WorkerId()));
             this.Redis.Remove(string.Format("worker:{0}:started", WorkerId()));
+
+            _stat.Clear(string.Format("processed:{0}", WorkerId()));
+            _stat.Clear(string.Format("failed:{0}", WorkerId()));
         }
 
         public void Process(Job job)
@@ -93,6 +102,9 @@ namespace ResqueSharp
             }
             catch (Exception e)
             {
+                _stat.Increment("failed");
+                _stat.Increment(string.Format("failed:{0}", WorkerId()));
+
                 _resque.LogFailure(new Failure(e.InnerException ?? e, this.WorkerId(), job.queue, job.payload));
             }
             finally
@@ -114,6 +126,18 @@ namespace ResqueSharp
             }
 
             return null;
+        }
+
+        // How many jobs has this worker processed? Returns a long.
+        public long Processed()
+        {
+            return _stat.Get(string.Format("processed:{0}", WorkerId()));
+        }
+
+        // How many failed jobs has this worker seen? Returns a long.
+        public long Failed()
+        {
+            return _stat.Get(string.Format("failed:{0}", WorkerId()));
         }
 
         private string WorkerId()
